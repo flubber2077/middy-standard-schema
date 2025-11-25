@@ -1,6 +1,6 @@
 {
   "name": "middy-standard-schema",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "middy middleware that uses standard schema validation",
   "keywords": [
     "middy",

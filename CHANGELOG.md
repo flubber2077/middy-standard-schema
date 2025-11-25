@@ -1,5 +1,11 @@
 # middy-standard-schema
 
+## 0.2.1
+
+### Patch Changes
+
+- 7db6952: Adds middy 4.x and 5.x to peer dependencies
+
 ## 0.2.0
 
 ### Minor Changes
