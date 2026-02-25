@@ -72,9 +72,9 @@ middy<APIGatewayProxyEvent>()
 
 By default, events will be transformed by the validation. This behavior can be modified to also transform Contexts and Responses, or turned off altogether to just allow for non-transforming validation.
 
-### Error Formatting
+### Error Handling
 
-You can use your validator's error formatter, or pass in your own.
+Middy Standard Schema has built in error handling, returning information to the client is opt-in with `exposedErrors` the option.
 
 ```typescript
 import z from "zod";
@@ -84,16 +84,27 @@ middy()
   .use(
     standardSchemaValidator({
       eventSchema: z.object(),
-      errorFormatter: z.prettifyError,
     }),
   )
+	// ^ throws a generic "The Event object failed validation" 400 error
   .use(
     standardSchemaValidator({
       eventSchema: v.object({}),
-      errorFormatter: v.flatten,
-    }),
+      exposeErrors: true,
+    }))
+		// ^ throws a 400 error with StandardSchema FailureResults object
+	.use(
+    standardSchemaValidator({
+      eventSchema: v.object({}),
+    }, (result, request) => {
+			if(result.issues){
+				throw new Error('lorem ipsum');
+			}
+			console.log(request.context);
+		}),
+		// ^ include the logging you need, or throw a specific error
   )
-  .handler(lamdaFunction);
+  .handler(lambdaFunction);
 ```
 
 ## Contribution
