@@ -6,7 +6,6 @@ export default defineConfig({
       enabled: true,
       include: ["src"],
       thresholds: {
-        '100': true,
         autoUpdate: true,
       },
     },

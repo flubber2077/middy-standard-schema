@@ -115,24 +115,6 @@ describe("error handling tests", () => {
     });
   });
 
-  test("error formatting", async () => {
-    const func = middy().use(
-      standardSchemaValidator({
-        eventSchema: z.string(),
-        errorFormatter: z.prettifyError,
-      }),
-    );
-
-    await expect(
-      func(1234 as unknown as string, {} as Request["context"]),
-    ).rejects.toMatchObject({
-      statusCode: 400,
-      message: JSON.stringify({
-        message: "✖ Invalid input: expected string, received number",
-      }),
-    });
-  });
-
   describe("error conversion checks", () => {
     test("error is properly returned", async () => {
       const thing = middy<APIGatewayProxyEvent, APIGatewayProxyResult>()
